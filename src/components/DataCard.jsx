@@ -8,14 +8,14 @@ function DataCard(props){
  return(
     <div className="container ">
         <div className="row">
-            <EachCard feild="Wind" value={props.wind_kph + " KPH"} />
-            <EachCard feild="Feels Like" value={props.feelslike_c} />
-            <EachCard feild="Heat Index" value={props.heatindex_c + " °C"} />
+            <EachCard feild="Wind" value={props.wind_kph + " KPH"} isDay={props.isDay} />
+            <EachCard feild="Feels Like" value={props.feelslike_c} isDay={props.isDay} />
+            <EachCard feild="Heat Index" value={props.heatindex_c + " °C"} isDay={props.isDay} />
         </div>
         <div className="row mt-1">
-            <EachCard feild="Humidity" value={props.humidity} />
-            <EachCard feild="UV" value={props.uv} />
-            <EachCard feild="Wind Chill" value={props.windchill_c + " °C"} />
+            <EachCard feild="Humidity" value={props.humidity} isDay={props.isDay} />
+            <EachCard feild="UV" value={props.uv} isDay={props.isDay} />
+            <EachCard feild="Wind Chill" value={props.windchill_c + " °C"} isDay={props.isDay} />
         </div>
     </div>
  )

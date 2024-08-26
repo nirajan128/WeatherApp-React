@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, {useState, useEffect} from "react";
 import Header from "./Header";
+import TimeCard from "./TimeCard";
 import axios from "axios";
 
 
@@ -18,6 +19,8 @@ const options = {
     const [importedData, setImportedData] = useState(null);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
+    const[isDay, setIsDay] = useState(true);
+    let formattedTime;
 
     useEffect(()=>{
       const fetchData = async ()=>{ 
@@ -37,14 +40,22 @@ const options = {
 
     if (loading) return <div>Loading...</div>;
     if (error) return <div>Error: {error}</div>;
+
+    //Background according to isDay
+    function theCondition(){
+       setIsDay(isDay === 0 ? true : false)
+    }
+
+    const conatinerStyle = {backgroundColor: isDay ? "skyblue" :  "black"}
   
     //Data destructuring
-    const{location, current} = importedData;
+    const{location, current, forecast} = importedData;
     const{name:title, localtime:currentTime} = location
     const{temp_c:temprature, condition, feelslike_f, heatindex_c,humidity,uv, wind_kph, windchill_c} = current
     const{text:conditionToday, icon:icon, is_day:is_day} = condition
+   
     return (
-      <div>
+      <div style={conatinerStyle}>
         <Header 
         title={title} 
         time={currentTime} 
@@ -58,8 +69,15 @@ const options = {
         uv={uv}
         wind_kph={wind_kph}
         windchill_c={windchill_c}
+        isDay={isDay}
         />
+
+        <main className="container">
+              <TimeCard eachHour={forecast.forecastday[0].hour}/>
+        </main>
+        
       </div>
+      
     );
   
 

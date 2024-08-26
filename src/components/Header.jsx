@@ -6,13 +6,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 function Header(props){
-    const[isDay, setIsDay] = useState(true);
-    
-    function theCondition(){
-       setIsDay(props.isDay === 0 ? true : false)
-    }
-
-    const conatinerStyle = {backgroundColor: isDay ? "skyblue" :  "black"}
+   
+    const conatinerStyle = {backgroundColor: props.isDay ? "skyblue" :  "black"}
 
     return (
     <div className="container-fluid" style={conatinerStyle}>
@@ -25,6 +20,7 @@ function Header(props){
         </div>
 
         <div className="col-sm-12 col-lg-8">
+
         <DataCard  
         feelslike_c={props.feelslike_c}
         heatindex_c={props.heatindex_c}
@@ -32,6 +28,7 @@ function Header(props){
         uv={props.uv}
         wind_kph={props.wind_kph}
         windchill_c={props.windchill_c}
+        isDay={props.isDay}
         />
         </div>
        </div>
