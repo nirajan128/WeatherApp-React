@@ -1,4 +1,6 @@
+/* eslint-disable no-unused-vars */
 import React, {useState, useEffect} from "react";
+import Header from "./Header";
 import axios from "axios";
 
 
@@ -15,7 +17,7 @@ const options = {
   function DataFetcher(){
     const [importedData, setImportedData] = useState(null);
     const [error, setError] = useState(null);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     useEffect(()=>{
       const fetchData = async ()=>{ 
@@ -38,8 +40,14 @@ const options = {
   
     return (
       <div>
-        <h1>Fetched Data</h1>
-        <pre>{JSON.stringify(importedData, null, 2)}</pre> {/* Display the imported data */}
+        <Header 
+        title={importedData.location.name} 
+        time={importedData.location.localtime} 
+        tempreture={importedData.current.temp_c}
+        condition={importedData.current.condition.text}
+        icon={importedData.current.condition.icon}
+        is_day={importedData.current.condition.is_day}
+        />
       </div>
     );
   
