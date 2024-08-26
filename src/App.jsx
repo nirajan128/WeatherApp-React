@@ -1,5 +1,5 @@
 
-import DataFetcher from './DataFetcher'
+import DataFetcher from './components/DataFetcher'
 
 function App() {
   return (

@@ -38,15 +38,26 @@ const options = {
     if (loading) return <div>Loading...</div>;
     if (error) return <div>Error: {error}</div>;
   
+    //Data destructuring
+    const{location, current} = importedData;
+    const{name:title, localtime:currentTime} = location
+    const{temp_c:temprature, condition, feelslike_f, heatindex_c,humidity,uv, wind_kph, windchill_c} = current
+    const{text:conditionToday, icon:icon, is_day:is_day} = condition
     return (
       <div>
         <Header 
-        title={importedData.location.name} 
-        time={importedData.location.localtime} 
-        tempreture={importedData.current.temp_c}
-        condition={importedData.current.condition.text}
-        icon={importedData.current.condition.icon}
-        is_day={importedData.current.condition.is_day}
+        title={title} 
+        time={currentTime} 
+        tempreture={temprature}
+        condition={conditionToday}
+        icon={icon}
+        is_day={is_day}
+        feelslike_c={feelslike_f}
+        heatindex_c={heatindex_c}
+        humidity={humidity}
+        uv={uv}
+        wind_kph={wind_kph}
+        windchill_c={windchill_c}
         />
       </div>
     );
