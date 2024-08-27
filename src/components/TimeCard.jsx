@@ -1,18 +1,19 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React from "react";
+import EachTimeCard from "./EachTimeCard";
 
-function TimeCard({ eachHour }) {
+function TimeCard(props) {
   return (
-    <div className="row">
-      {eachHour.map((eachTime, index) => (
-        <div className="col-2" key={index}>
-          <h5>{eachTime.time.split(" ")[1]}</h5> {/* Extracts the time part */}
-          <img src={eachTime.condition.icon} alt="Weather icon" />
-          <h5>{eachTime.temp_c}°C</h5>
-        </div>
+    <>
+      {props.eachHour.map((eachTime, index) => (
+        <EachTimeCard 
+        timeNow={eachTime.time.split(" ")[1]}
+        imgSrc={eachTime.condition.icon}
+        eachTemp={eachTime.temp_c}
+        key={index}/>
       ))}
-    </div>
+    </>
   );
 }
 

@@ -1,9 +1,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
 body{
-  
     font-family: "Montserrat", sans-serif;
     font-optical-sizing: auto;
     font-style: normal;
+}
 
+.custom-height{
+    height: 100vh;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+  width: 50px; /* Adjust width if needed */
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  width: 100%; /* Makes the icons fill the entire button area */
+  height: 100%;
 }

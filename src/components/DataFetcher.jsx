@@ -1,9 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import React, {useState, useEffect} from "react";
 import Header from "./Header";
 import TimeCard from "./TimeCard";
+import Carousel from "./Carousel";
 import axios from "axios";
-
+import "../assets/styles/index.css"
 
 const options = {
     method: 'GET',
@@ -20,33 +22,36 @@ const options = {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
     const[isDay, setIsDay] = useState(true);
-    let formattedTime;
-
-    useEffect(()=>{
-      const fetchData = async ()=>{ 
-          try {
-            const response = await axios.request(options); // use .request if the url, method and keys are defined in a constant
-            console.log(response.data);
-            setImportedData(response.data); //set the data
-            
-          } catch (error) {
-            setError(error.message); // Set the error state if there's an error
-          }finally{
-            setLoading(false)
-          }
+    const refreshInterval = 5 * 60 * 1000; // 5 minutes in milliseconds
+    const fetchData = async ()=>{ 
+      try {
+        const response = await axios.request(options); // use .request if the url, method and keys are defined in a constant
+        console.log(response.data);
+        setImportedData(response.data); //set the data
+        setIsDay(response.data.current.is_day === 1);
+        
+      } catch (error) {
+        setError(error.message); // Set the error state if there's an error
+      }finally{
+        setLoading(false)
       }
-      fetchData();
-    }, []);
+  }
+  
 
+    useEffect(()=>{ 
+      fetchData(); //initial fetch data
+
+      const intervalId = setInterval(fetchData, refreshInterval); //fetches data every 5minutes
+
+        // Cleanup interval on component unmount
+        return () => clearInterval(intervalId);
+    }, []);// Empty dependency array ensures this runs once on mount
+
+  
     if (loading) return <div>Loading...</div>;
     if (error) return <div>Error: {error}</div>;
 
-    //Background according to isDay
-    function theCondition(){
-       setIsDay(isDay === 0 ? true : false)
-    }
-
-    const conatinerStyle = {backgroundColor: isDay ? "skyblue" :  "black"}
+   
   
     //Data destructuring
     const{location, current, forecast} = importedData;
@@ -54,8 +59,11 @@ const options = {
     const{temp_c:temprature, condition, feelslike_f, heatindex_c,humidity,uv, wind_kph, windchill_c} = current
     const{text:conditionToday, icon:icon, is_day:is_day} = condition
    
+    
+
+   const conatinerStyle = {backgroundColor: isDay ? "skyblue" :  "black", color: isDay ? "black" : "white"}
     return (
-      <div style={conatinerStyle}>
+      <div style={conatinerStyle} className="custom-height">
         <Header 
         title={title} 
         time={currentTime} 
@@ -73,7 +81,7 @@ const options = {
         />
 
         <main className="container">
-              <TimeCard eachHour={forecast.forecastday[0].hour}/>
+              <Carousel eachHour={forecast.forecastday[0].hour}/>
         </main>
         
       </div>
