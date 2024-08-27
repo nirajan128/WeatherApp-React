@@ -3,8 +3,8 @@
 /* eslint-disable no-unused-vars */
 import React, {useState, useEffect} from "react";
 import Header from "./Header";
-import TimeCard from "./TimeCard";
 import Carousel from "./Carousel";
+import Forecast from "./Forecast";
 import axios from "axios";
 import "../assets/styles/index.css"
 
@@ -24,6 +24,7 @@ const options = {
     const [loading, setLoading] = useState(true);
     const[isDay, setIsDay] = useState(true);
     const refreshInterval = 5 * 60 * 1000; // 5 minutes in milliseconds
+
     const fetchData = async ()=>{ 
       try {
         const response = await axios.request(options); // use .request if the url, method and keys are defined in a constant
@@ -44,8 +45,9 @@ const options = {
 
       const intervalId = setInterval(fetchData, refreshInterval); //fetches data every 5minutes
 
-        // Cleanup interval on component unmount
-        return () => clearInterval(intervalId);
+      // Cleanup interval on component unmount
+      return () => clearInterval(intervalId);
+
     }, []);// Empty dependency array ensures this runs once on mount
 
   
@@ -59,35 +61,47 @@ const options = {
     const{name:title, localtime:currentTime} = location
     const{temp_c:temprature, condition, feelslike_f, heatindex_c,humidity,uv, wind_kph, windchill_c} = current
     const{text:conditionToday, icon:icon, is_day:is_day} = condition
-   
-    
+    const{forecastday} = forecast;
 
-   const conatinerStyle = {backgroundColor: isDay ? "skyblue" :  "black", color: isDay ? "black" : "white"}
+    const conatinerStyle = {backgroundColor: isDay ? "skyblue" :  "black", color: isDay ? "black" : "white"}
+
     return (
-      <div style={conatinerStyle} className="custom-height">
-        <Header 
-        title={title} 
-        time={currentTime} 
-        tempreture={temprature}
-        condition={conditionToday}
-        icon={icon}
-        is_day={is_day}
-        feelslike_c={feelslike_f}
-        heatindex_c={heatindex_c}
-        humidity={humidity}
-        uv={uv}
-        wind_kph={wind_kph}
-        windchill_c={windchill_c}
-        isDay={isDay}
-        />
+      <div style={conatinerStyle} className="h-100">
+          <Header 
+              title={title} 
+              time={currentTime} 
+              tempreture={temprature}
+              condition={conditionToday}
+              icon={icon}
+              is_day={is_day}
+              feelslike_c={feelslike_f}
+              heatindex_c={heatindex_c}
+              humidity={humidity}
+              uv={uv}
+              wind_kph={wind_kph}
+              windchill_c={windchill_c}
+              isDay={isDay}
+          />
+  
+          <main className="container h-100">
+              <div className="row">
+                  <div className="col-12">
+                  <Carousel eachHour={forecastday[0].hour} />
+                  
+                     
+                  </div>
+                  <div className="col-12 mt-3">
+                      <div className="overflow-auto">
+                      <Forecast forecast={forecastday} />
+                      </div>
+                  </div>
+              </div>
+              <p className="text-center fst-italic text-primary p-3"><a href="https://github.com/nirajan128">@NirajanShrestha-2024</a></p>
+          </main>
 
-        <main className="container">
-              <Carousel eachHour={forecast.forecastday[0].hour}/>
-        </main>
-        
       </div>
-      
-    );
+  );
+  
   
 
     }

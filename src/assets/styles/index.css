@@ -20,3 +20,36 @@ body{
   width: 100%; /* Makes the icons fill the entire button area */
   height: 100%;
 }
+
+/* Smaller screens */
+@media (max-width: 576px) {
+  h1 {
+      font-size: 1rem;
+  }
+  h2 {
+      font-size: 1.75rem;
+  }
+  h3 {
+      font-size: 1rem;
+  }
+  h4 {
+      font-size: 0.8rem;
+  }
+  h5 {
+      font-size: 1.125rem;
+  }
+  h6 {
+      font-size: 1rem;
+  }
+  p {
+      font-size: 0.5rem;
+  }
+
+  img{
+    height: 12vw;
+  }
+
+  th,td{
+    font-size: 0.6rem;
+  }
+}

@@ -4,7 +4,7 @@ import React, {useState, useEffect} from "react";
 
 function EachTimeCard(props){
 
-    return (<div className="col-2 d-flex flex-column justify-content-center align-items-center p-3 border-end" style={{backgroundColor:"#353935"}}>
+    return (<div className="col-2 d-flex flex-column justify-content-center align-items-center p-3 border-end border-dark text-light" style={{backgroundColor:"#353935"}}>
          <h4>{props.timeNow}</h4>
          <img src={props.imgSrc} />
          <h4>{props.eachTemp} °C</h4>
